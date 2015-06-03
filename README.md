@@ -13,7 +13,9 @@ To compile on cyclops machine, set environment variables as such
 	export HSA_LLVM_PATH=/opt/amd/cloc/bin
 	export HSA_RUNTIME_PATH=/opt/hsa
 	export PATH=$PATH:/opt/amd/cloc/bin
-	export LD_LIBRARY_PATH=/opt/hsa/lib
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/hsa/lib
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:[PATH_TO_YOUR_CL2HSA]
+
 
 Known issue
 --------------------
