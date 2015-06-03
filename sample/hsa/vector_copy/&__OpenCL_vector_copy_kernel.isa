@@ -1,0 +1,106 @@
+ShaderType = IL_SHADER_COMPUTE
+TargetChip = t
+
+
+
+; ------------- SC_SRCSHADER Dump ------------------
+SC_SHADERSTATE: u32NumIntVSConst = 0
+SC_SHADERSTATE: u32NumIntPSConst = 0
+SC_SHADERSTATE: u32NumIntGSConst = 0
+SC_SHADERSTATE: u32NumBoolVSConst = 0
+SC_SHADERSTATE: u32NumBoolPSConst = 0
+SC_SHADERSTATE: u32NumBoolGSConst = 0
+SC_SHADERSTATE: u32NumFloatVSConst = 0
+SC_SHADERSTATE: u32NumFloatPSConst = 0
+SC_SHADERSTATE: u32NumFloatGSConst = 0
+u32SCOptions[0] = 0x00000000
+u32SCOptions[1] = 0x00000000
+u32SCOptions[2] = 0x04000000 SCOption_R1000_DISABLE_INDEXED_RESOURCE_TYPE_CHECK
+u32SCOptions[3] = 0x00001F00 SCOption_R1100_STORE_COALESCE_WORKAROUND_BUG452151 SCOption_R1000R1100_VCCZ_CLOBBER_WORKAROUND_BUG457939 SCOption_UBTS463396_RANGE_CHECK_FOR_VMEMOP SCOption_UBTS463071_RANGE_CHECK_FOR_SMRD SCOption_R1100_FLAT_SCRATCH_OOB_WORKAROUND_BUG379895
+u32SCOptions[4] = 0x00800000 SCOption_R1000_SGPR_TRAP_REGISTERS
+; -------- Disassembly --------------------
+shader main
+  asic(CI)
+  type(CS)
+
+  s_load_dword  s0, s[4:5], 0x01                        // 000000000000: C0000501
+  s_waitcnt     lgkmcnt(0)                              // 000000000004: BF8C007F
+  s_bfe_u32     s0, s0, 0x00100000                      // 000000000008: 9380FF00 00100000
+  s_mul_i32     s0, s0, s8                              // 000000000010: 93000800
+  v_add_i32     v0, vcc, s0, v0                         // 000000000014: 4A000000
+  s_load_dwordx2  s[0:1], s[6:7], 0x00                  // 000000000018: C0400700
+  s_load_dwordx4  s[4:7], s[6:7], 0x0c                  // 00000000001C: C082070C
+  s_waitcnt     lgkmcnt(0)                              // 000000000020: BF8C007F
+  v_add_i32     v0, s[2:3], v0, s0                      // 000000000024: D24A0200 00000100
+  v_ashrrev_i32  v1, 31, v0                             // 00000000002C: 3002009F
+  v_lshl_b64    v[0:1], v[0:1], 2                       // 000000000030: D2C20000 00010500
+  v_add_i32     v2, vcc, s4, v0                         // 000000000038: 4A040004
+  v_mov_b32     v3, s5                                  // 00000000003C: 7E060205
+  v_addc_u32    v3, vcc, v3, v1, vcc                    // 000000000040: 50060303
+  flat_load_dword  v2, v[2:3]                           // 000000000044: DC300000 02000002
+  v_add_i32     v0, vcc, s6, v0                         // 00000000004C: 4A000006
+  v_mov_b32     v3, s7                                  // 000000000050: 7E060207
+  v_addc_u32    v1, vcc, v3, v1, vcc                    // 000000000054: 50020303
+  s_waitcnt     vmcnt(0) & lgkmcnt(0)                   // 000000000058: BF8C0070
+  flat_store_dword  v[0:1], v2                          // 00000000005C: DC700000 00000200
+  s_endpgm                                              // 000000000064: BF810000
+end
+
+; ----------------- CS Data ------------------------
+
+codeLenInByte        = 360 bytes;
+objectHeaderByteSize = 256 bytes;
+
+; launchModeFlags    = 0x00000200
+isAql                = TRUE;
+
+userElementCount     = 0;
+extUserElementCount  = 0;
+NumVgprs             = 4;
+NumSgprs             = 11;
+FloatMode            = 192;
+IeeeMode             = 1;
+FlatPtr32            = 0;
+ScratchSize          = 0 dwords/thread;
+LDSByteSize          = 0 bytes/workgroup (compile time only);
+ScratchWaveOffsetReg = s65535;
+; texSamplerUsage         = 0x00000000
+; constBufUsage           = 0x00000000
+
+;COMPUTE_PGM_RSRC2       = 0x00000090
+COMPUTE_PGM_RSRC2:USER_SGPR      = 8
+COMPUTE_PGM_RSRC2:TGID_X_EN      = 1
+; ---------------------------- AMD Code Descriptor ----------------------------
+amd_kernel_code_version_major                  = 1
+amd_kernel_code_version_minor                  = 0
+amd_machine_kind                               = AMD_MACHINE_KIND_AMDGPU
+amd_machine_version_major                      = 0
+amd_machine_version_minor                      = 0
+amd_machine_version_stepping                   = 0
+kernel_code_entry_byte_offset                  = 256
+max_scratch_backing_memory_byte_size           = 0
+; compute_pgm_rsrc1:
+  granulated_workitem_vgpr_count                       = 0
+  granulated_wavefront_sgpr_count                      = 1
+  priority                                             = 0
+  float_mode_round_32                                  = ROUND_TO_NEAREST_EVEN
+  float_mode_round_16_64                               = ROUND_TO_NEAREST_EVEN
+  float_mode_denorm_32                                 = FLUSH_SOURCE_OUTPUT
+  float_mode_denorm_16_64                              = FLUSH_NONE
+  enable_ieee_mode                                     = TRUE
+; compute_pgm_rsrc2:
+  user_sgpr_count                                      = 8
+  enable_sgpr_workgroup_id_x                           = TRUE
+  enable_vgpr_workitem_id                              = X
+  granulated_lds_size                                  = 0
+enable_sgpr_private_segment_buffer             = TRUE
+enable_sgpr_dispatch_ptr                       = TRUE
+enable_sgpr_kernarg_segment_ptr                = TRUE
+private_element_size                           = DWORD (4 bytes)
+is_ptr64                                       = TRUE
+gds_segment_byte_size                          = 0
+kernarg_segment_byte_size                      = 64
+wavefront_sgpr_count                           = 11
+workitem_vgpr_count                            = 4
+kernarg_segment_alignment                      = 3
+wavefront_size                                 = 6
