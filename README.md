@@ -10,14 +10,10 @@ How to use
 --------------------
 To compile on cyclops machine, set environment variables as such
 
-	export hsa_llvm_path=/opt/amd/cloc/bin
-	export hsa_runtime_path=/opt/hsa
-	export path=$path:/opt/amd/cloc/bin
-	export ld_library_path=/opt/hsa/lib
-	export ld_library_path=$ld_library_path:/home/yifan/hsa/cl2hsa/
-
-
-
+	export HSA_LLVM_PATH=/opt/amd/cloc/bin
+	export HSA_RUNTIME_PATH=/opt/hsa
+	export PATH=$PATH:/opt/amd/cloc/bin
+	export LD_LIBRARY_PATH=/opt/hsa/lib
 
 Known issue
 --------------------
