@@ -2,10 +2,6 @@
 
 #include "cl2hsa.h"
 
-struct _cl_platform_id
-{
-	uint64_t platform_id;
-};
 
 cl_int clGetPlatformIDs(cl_uint num_entries, 
 		cl_platform_id *platforms,
@@ -36,22 +32,8 @@ cl_int clGetPlatformIDs(cl_uint num_entries,
 	return CL_SUCCESS;
 }
 
-// A struct that has all the data related to the process of iterating agents
-typedef struct find_agent_data
-{
-	cl_device_type device_type;
-	cl_uint num_entries;
-	cl_device_id *devices;
-	cl_uint *num_devices;
-} find_agent_data_t;
 
 // Device
-struct _cl_device_id
-{
-	hsa_agent_t agent;
-};
-
-
 hsa_status_t find_agent(hsa_agent_t agent, void *data)
 {
 	find_agent_data_t *detailed_data = (find_agent_data_t *)data;
