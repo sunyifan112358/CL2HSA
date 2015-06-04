@@ -61,7 +61,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	// Query the maximum size of the HSA queue
 	command_queue->queue_size = 0;
 	hsa_status_t err;
-	err = hsa_agent_get_info(device->agent,
+	err = hsa_agent_get_info(command_queue->device->agent,
 			HSA_AGENT_INFO_QUEUE_MAX_SIZE, &command_queue->queue_size);
 
 #if HSADEBUG
@@ -76,7 +76,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	if (err != HSA_STATUS_SUCCESS)
 	{
 #if HSADEBUG
-		printf("%Command Queue Creation failed.\n");
+		printf("Command Queue Creation failed.\n");
 #endif
 		exit(1);
 	}
