@@ -81,7 +81,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	if (err != HSA_STATUS_SUCCESS)
 	{
 #if HSADEBUG
-		printf("%Command Queue Creation failed.\n");
+		printf("Command Queue Creation failed.\n");
 #endif
 		exit(1);
 	}
