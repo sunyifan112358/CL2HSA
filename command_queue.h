@@ -1,3 +1,8 @@
+#ifndef COMMAND_QUEUE_H
+#define COMMAND_QUEUE_H
+
+#include <stdint.h>
+
 #include "cl2hsa.h"
 
 struct _cl_command_queue
@@ -7,3 +12,5 @@ struct _cl_command_queue
 	cl_device_id device;
 	cl_context context;
 };
+
+#endif

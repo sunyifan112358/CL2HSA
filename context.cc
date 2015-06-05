@@ -8,6 +8,6 @@ cl_context clCreateContext(const cl_context_properties *properties,
 		void *user_data,
 		cl_int *errcode_ret)
 {
-	cl_context context = malloc(sizeof(struct _cl_context));
+	cl_context context = (cl_context)malloc(sizeof(struct _cl_context));
 	return context;
 }

@@ -1,39 +1,6 @@
-#include "stdio.h"
+#include "platform.h"
+#include "device.h"
 
-#include "cl2hsa.h"
-
-
-cl_int clGetPlatformIDs(cl_uint num_entries, 
-		cl_platform_id *platforms,
-		cl_uint *num_platforms)
-{
-	// This function is usually the first to be called. Therefore, let it
-	// call hsa_init
-	hsa_init();
-
-	// Validate arguments
-	if (num_entries == 0 && platforms != NULL)
-	{
-		return CL_INVALID_VALUE;
-	}
-	else if ( platforms == NULL && num_platforms == NULL)
-	{
-		return CL_INVALID_VALUE;
-	}
-
-	// Set value
-	struct _cl_platform_id *platform = 
-		malloc(sizeof(struct _cl_platform_id));
-	platform->platform_id = 1;
-	platforms[0] = platform;
-	*num_platforms = 1;
-
-	// Return success
-	return CL_SUCCESS;
-}
-
-
-// Device
 hsa_status_t find_agent(hsa_agent_t agent, void *data)
 {
 	find_agent_data_t *detailed_data = (find_agent_data_t *)data;
@@ -63,7 +30,8 @@ hsa_status_t find_agent(hsa_agent_t agent, void *data)
 	if (type == filter_device_type)
 	{
 		// Create device information
-		cl_device_id device = malloc(sizeof(struct _cl_device_id));
+		cl_device_id device = (cl_device_id)
+			malloc(sizeof(struct _cl_device_id));
 		device->agent = agent;
 		detailed_data->devices[*(detailed_data->num_devices)] = device;
 		(*detailed_data->num_devices)++;
@@ -97,7 +65,8 @@ cl_int clGetDeviceIDs(cl_platform_id platform,
 	*num_devices = 0;
 
 	// Create data
-	find_agent_data_t *data = malloc(sizeof(find_agent_data_t));
+	find_agent_data_t *data = (find_agent_data_t *)
+		malloc(sizeof(find_agent_data_t));
 	data->device_type = device_type;
 	data->num_entries = num_entries;
 	data->devices = devices;
@@ -116,6 +85,4 @@ cl_int clGetDeviceIDs(cl_platform_id platform,
 
 	return CL_SUCCESS;
 }
-
-
 

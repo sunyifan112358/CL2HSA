@@ -1,3 +1,4 @@
+#include "device.h"
 #include "command_queue.h"
 
 // Implementation of a Command Queue in OpenCL 1.0/1.1/1.2
@@ -9,12 +10,13 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 {
 
 	cl_command_queue command_queue = NULL;
+
 	// Validate arguments
 	// Check for context and device
 	if(context == NULL)
 	{
 		if (errcode_ret)
-					*errcode_ret = CL_INVALID_CONTEXT;
+			*errcode_ret = CL_INVALID_CONTEXT;
 		return command_queue;
 	}
 	else
@@ -27,7 +29,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	if(device == NULL)
 	{
 		if (errcode_ret)
-					*errcode_ret = CL_INVALID_DEVICE;
+			*errcode_ret = CL_INVALID_DEVICE;
 		return command_queue;
 	}
 	else
@@ -54,7 +56,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	}
 
 	// Create an OpenCL command queue usign HSA constructs
-	command_queue = malloc(sizeof(struct _cl_command_queue));
+	command_queue = (cl_command_queue)malloc(sizeof(struct _cl_command_queue));
 	command_queue->device = device;
 	command_queue->context = context;
 
@@ -62,7 +64,8 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	command_queue->queue_size = 0;
 	hsa_status_t err;
 	err = hsa_agent_get_info(device->agent,
-			HSA_AGENT_INFO_QUEUE_MAX_SIZE, &command_queue->queue_size);
+			HSA_AGENT_INFO_QUEUE_MAX_SIZE, 
+			&command_queue->queue_size);
 
 #if HSADEBUG
 	printf("The maximum queue size is %u.\n",
@@ -70,8 +73,10 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 #endif
 
 	// Create a new HSA queue
-	err = hsa_queue_create(command_queue->device->agent, command_queue->queue_size,
-			HSA_QUEUE_TYPE_SINGLE, NULL, NULL, UINT32_MAX, UINT32_MAX,
+	err = hsa_queue_create(command_queue->device->agent, 
+			command_queue->queue_size,
+			HSA_QUEUE_TYPE_SINGLE, NULL, NULL, 
+			UINT32_MAX, UINT32_MAX,
 			&command_queue->queue);
 	if (err != HSA_STATUS_SUCCESS)
 	{
