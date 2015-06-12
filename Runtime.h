@@ -26,6 +26,15 @@ public:
 		}
 		return instance.get();
 	}
+
+	// List for managing devices
+	std::list<cl_device_id> device_list;
+
+	// List for managing contexts
+	std::list<cl_context> ctx_list;
+
+	// List for command queues
+	std::list<cl_command_queue> cmd_queue_list;
 };
 
 #endif

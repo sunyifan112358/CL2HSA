@@ -1,4 +1,6 @@
 #include "context.h"
+#include "Runtime.h"
+
 
 cl_context clCreateContext(const cl_context_properties *properties,
 		cl_uint num_devices,
@@ -8,6 +10,50 @@ cl_context clCreateContext(const cl_context_properties *properties,
 		void *user_data,
 		cl_int *errcode_ret)
 {
-	cl_context context = (cl_context)malloc(sizeof(struct _cl_context));
+	// Check properties
+	if (properties && errcode_ret)
+	{
+		warning("CL2HSA does not support context properties\n"
+					"Context creation failed");
+		*errcode_ret = CL_INVALID_PROPERTY;
+		return NULL;
+	}
+
+	// Verify device id using device lists in Runtime
+	Runtime *runtime = Runtime::getInstance();
+	auto iter = std::find(runtime->device_list.begin(), runtime->device_list.end(), devices[0]);
+	if((iter == runtime->device_list.end()) && (errcode_ret))
+	{
+		*errcode_ret = CL_INVALID_DEVICE;
+		return NULL;
+	}
+
+	// Check for call-back functions
+	if (user_data || pfn_notify)
+	{
+		warning("CL2HSA does no support function call backs for clCreateContext\n"
+			"All call back funtion options will be ignored\n");
+	}
+
+	// Create Context
+	cl_context context = new(struct _cl_context);
+	if(context)
+	{
+		// Register context in runtime context list
+		runtime->ctx_list.push_back(context);
+#if RTDEBUG
+		std::cout << "Context is %u" << context;
+#endif
+		// Report Success
+		if(errcode_ret)
+			*errcode_ret = CL_SUCCESS;
+	}
+	else
+	{
+#if RTDEBUG
+		std::cout << "Error allocating cl_context" << endl;
+#endif
+	}
+
 	return context;
 }

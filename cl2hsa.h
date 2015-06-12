@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <iostream>
+#include <list>
+#include <algorithm>
 #include "include/CL/cl.h"
 #include "hsa.h"
 

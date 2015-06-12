@@ -76,7 +76,9 @@ cl_int clGetDeviceIDs(cl_platform_id platform,
 	hsa_status_t err = hsa_iterate_agents(find_agent, data);
 	if (err != HSA_STATUS_SUCCESS && err != HSA_STATUS_INFO_BREAK)
 	{
-		printf("Error iterating hsa devices.\n");
+#if HSADEBUG
+		std::cout << "Error iterating hsa devices.\n";
+#endif
 		exit(err);
 	}
 

@@ -68,8 +68,8 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 			&command_queue->queue_size);
 
 #if HSADEBUG
-	printf("The maximum queue size is %u.\n",
-			(unsigned int) command_queue->queue_size);
+	std::cout << "The maximum queue size is %u.\n"
+		<< (unsigned int) command_queue->queue_size;
 #endif
 
 	// Create a new HSA queue
@@ -81,7 +81,7 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 	if (err != HSA_STATUS_SUCCESS)
 	{
 #if HSADEBUG
-		printf("Command Queue Creation failed.\n");
+		std::cout << "Command Queue Creation failed.\n";
 #endif
 		exit(1);
 	}
