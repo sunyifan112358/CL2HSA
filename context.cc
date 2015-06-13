@@ -20,9 +20,9 @@ cl_context clCreateContext(const cl_context_properties *properties,
 	}
 
 	// Verify device id using device lists in Runtime
-	Runtime *runtime = Runtime::getInstance();
-	auto iter = std::find(runtime->device_list.begin(), runtime->device_list.end(), devices[0]);
-	if((iter == runtime->device_list.end()) && (errcode_ret))
+	auto iter = std::find(Runtime::getInstance()->device_list.begin(),
+			Runtime::getInstance()->device_list.end(), devices[0]);
+	if((iter == Runtime::getInstance()->device_list.end()) && (errcode_ret))
 	{
 		*errcode_ret = CL_INVALID_DEVICE;
 		return NULL;
@@ -40,7 +40,7 @@ cl_context clCreateContext(const cl_context_properties *properties,
 	if(context)
 	{
 		// Register context in runtime context list
-		runtime->ctx_list.push_back(context);
+		Runtime::getInstance()->ctx_list.push_back(context);
 #if RTDEBUG
 		std::cout << "Context is %u" << context;
 #endif
