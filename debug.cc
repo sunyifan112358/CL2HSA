@@ -7,7 +7,7 @@
 
 #include "debug.h"
 
-void cl2hsa_fatal(char *fmt, ...)
+void cl2hsa_fatal(const char *fmt, ...)
 {
 	va_list va;
 	va_start(va, fmt);
@@ -19,7 +19,7 @@ void cl2hsa_fatal(char *fmt, ...)
 }
 
 
-void cl2hsa_panic(char *fmt, ...)
+void cl2hsa_panic(const char *fmt, ...)
 {
 	va_list va;
 	va_start(va, fmt);
@@ -31,7 +31,7 @@ void cl2hsa_panic(char *fmt, ...)
 }
 
 
-void cl2hsa_warning(char *fmt, ...)
+void cl2hsa_warning(const char *fmt, ...)
 {
 	va_list va;
 	va_start(va, fmt);
