@@ -2,6 +2,7 @@
 #define RUNTIME_H
 
 #include <memory>
+#include <list>
 
 #include "cl2hsa.h"
 
@@ -13,7 +14,7 @@ class Runtime
 	static std::unique_ptr<Runtime> instance;
 
 	// Private constructor
-	Runtime();
+	Runtime() {};
 
 public:
 

@@ -1,4 +1,5 @@
 #include "device.h"
+#include "debug.h"
 #include "command_queue.h"
 
 // Implementation of a Command Queue in OpenCL 1.0/1.1/1.2

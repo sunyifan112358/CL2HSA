@@ -1,15 +1,15 @@
-IFLAG = -Iinclude/ -I/$(HSA_RUNTIME_PATH)/include/
+IFLAG = -Iinclude/ -I$(HSA_RUNTIME_PATH)/include/
 CC = g++
-CXXFLAGS = $(IFLAG) -Wall -Werror -fPIC -std=c++11
+CXXFLAGS = $(IFLAG) -fPIC -Wall -Werror -std=c++11
 
 DEPS = %.h
 
-OBJ = Runtime.o \
+OBJ = debug.o \
+      Runtime.o \
       platform.o \
       context.o \
       command_queue.o \
-      debug.o \
-      device.o
+      device.o 
 
 libcl2hsa.so: $(OBJ)
 	$(CC) -o $@ $^ $(CXXFLAGS) -shared -DHSADEBUG -DRTDEBUG
@@ -19,14 +19,6 @@ libcl2hsa.so: $(OBJ)
 
 
 all: libcl2hsa.so
-
-all:
-	gcc -o libcl2hsa.so -fPIC\
-		-Iinclude/ \
-		-I$(HSA_RUNTIME_PATH)/include/ \
-		-Wall -Werror \
-		-DHSADEBUG\
-		cl2hsa.c context.c command_queue.c debug.c -shared
 
 clean:
 	rm -f *.so *.o

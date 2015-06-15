@@ -1,4 +1,11 @@
-#include "cl2hsa.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <iostream>
+#include <list>
+#include <algorithm>
+
+#include "debug.h"
 
 void cl2hsa_fatal(char *fmt, ...)
 {
@@ -31,4 +38,5 @@ void cl2hsa_warning(char *fmt, ...)
 	fprintf(stderr, "\nOpenCL runtime warning: ");
 	vfprintf(stderr, fmt, va);
 	fprintf(stderr, "\n\n");
+	return;
 }

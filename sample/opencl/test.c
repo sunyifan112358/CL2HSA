@@ -51,7 +51,8 @@ int main()
 	 
 
 	// Create Command Queue 
-	command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
+	command_queue = clCreateCommandQueue(
+			context, device_id, 0, &ret);
 	if (ret == CL_SUCCESS) {
 		printf("Command queue id %lld.\n", *(unsigned long long *)(&command_queue));
 	}
