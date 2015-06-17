@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include "context.h"
 #include "debug.h"
@@ -44,7 +45,7 @@ cl_context clCreateContext(const cl_context_properties *properties,
 		// Register context in runtime context list
 		Runtime::getInstance()->ctx_list.push_back(context);
 #if RTDEBUG
-		std::cout << "Context is %u" << context;
+		std::cout << "Context is " << context << std::endl;
 #endif
 		// Report Success
 		if(errcode_ret)
@@ -53,7 +54,7 @@ cl_context clCreateContext(const cl_context_properties *properties,
 	else
 	{
 #if RTDEBUG
-		std::cout << "Error allocating cl_context" << endl;
+		std::cout << "Error allocating cl_context\n";
 #endif
 	}
 

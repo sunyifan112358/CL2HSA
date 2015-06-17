@@ -15,7 +15,7 @@ libcl2hsa.so: $(OBJ)
 	$(CC) -o $@ $^ $(CXXFLAGS) -shared -DHSADEBUG -DRTDEBUG
 
 %.o: %.cc $(DEPS)
-	$(CC) -c -o $@ $< $(CXXFLAGS)
+	$(CC) -c -o $@ $< $(CXXFLAGS) -DHSADEBUG -DRTDEBUG
 
 
 all: libcl2hsa.so

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "platform.h"
 #include "device.h"
 #include "Runtime.h"

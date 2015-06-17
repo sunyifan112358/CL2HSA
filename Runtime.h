@@ -23,7 +23,7 @@ public:
 	{
 		if (!instance.get())
 		{
-			instance.reset(new Runtime());
+			instance.reset(new Runtime);
 		}
 		return instance.get();
 	}

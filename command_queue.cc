@@ -1,3 +1,4 @@
+#include <iostream>
 #include "device.h"
 #include "debug.h"
 #include "command_queue.h"
@@ -69,8 +70,8 @@ cl_command_queue clCreateCommandQueue(cl_context context,
 			&command_queue->queue_size);
 
 #if HSADEBUG
-	std::cout << "The maximum queue size is %u.\n"
-		<< (unsigned int) command_queue->queue_size;
+	std::cout << "The maximum queue size is "
+		<< (unsigned int) command_queue->queue_size << std::endl;
 #endif
 
 	// Create a new HSA queue
