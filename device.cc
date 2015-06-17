@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "device.h"
+#include "Runtime.h"
 
 hsa_status_t find_agent(hsa_agent_t agent, void *data)
 {
@@ -81,6 +82,10 @@ cl_int clGetDeviceIDs(cl_platform_id platform,
 #endif
 		exit(err);
 	}
+
+	// Register device with the runtime
+	Runtime *instance = Runtime::getInstance();
+	instance->device_list.push_back(devices[0]);
 
 	// Free data
 	free(data);

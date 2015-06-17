@@ -1,5 +1,4 @@
 #include <algorithm>
-
 #include "context.h"
 #include "debug.h"
 #include "Runtime.h"
