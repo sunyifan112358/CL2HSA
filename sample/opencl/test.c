@@ -48,7 +48,9 @@ int main()
 	 
 	// Create OpenCL context 
 	context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
-	 
+	if (ret != CL_SUCCESS) {
+		printf("Context failed %d.\n", ret);
+	}
 
 	// Create Command Queue 
 	command_queue = clCreateCommandQueue(
